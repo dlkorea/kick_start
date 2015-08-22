@@ -26,7 +26,7 @@ def index(request):
     """
     return redirect(reverse_lazy('calendar:list_view'))
 
-
+"""
 def list_by_period(request, date_str):
     if re.fullmatch(r('dddd'))
         date = date_str
@@ -52,6 +52,7 @@ def list_by_period(request, date_str):
         'article_over_period': article_over_period,
     }
     return render(request, 'calendar/article_list_by.html', params)
+"""
 
 
 def article_list(request):

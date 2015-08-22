@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <td>
+      <img src="{{ user.profile.image.name }}" alt="">&nbsp;{{ user.username }}
+    </td>
+    <td>
+      <textarea name="" id="" cols="30" rows="5" placeholder="How may I help you?"></textarea>
+    </td>
+    <a href="" class="btn">Ask</a>
+    </div>
+  </div>
+{% for question in question_list %}
+  <div class="panel panel-default">
+    <div class="panel-body" class="question">
+      <h3><img src="{{ question.created_by.profile.image.name }}" alt="">&nbsp;{{ question.title }}</h3>
+      <p>{{ question.content }}</p>
+      <br>
+    {% for answer in question.answer_set.all %}
+      <p>{{ answer.content }}</p>
+    {% endfor %}
+      <img src="{{ user.profile.image.name }}" alt="">&nbsp;&nbsp;<input style="width:70%; display:inline-block;" type="text" placeholder="Press Enter key for answering" class="form-control">
+    </div>
+  </div>
+{% empty %}
+  <div class="panel panel-default">
+    <p>아직 질문이 없습니다.</p>
+  </div>
+{% endfor %}
+{% endblock main %}

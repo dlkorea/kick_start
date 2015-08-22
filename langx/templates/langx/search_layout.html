@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    
+<meta property="og:url"   content="http://snuventure.com/" />
+<meta property="og:image" content="#" />
+<meta property="og:title" content="" />
+<meta property='og:description' content="" >
+
+
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+</script>
+<title>Ask</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link href='http://fonts.googleapis.com/css?family=Exo|Exo+2|Play' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+     <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>   
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title></title>
+  
+<style>
+@import url(http://fonts.googleapis.com/css?family=Titillium+Web);
+  @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+  body{   
+    background-color: #409bec;
+    font-family: 'Titillium Web', sans-serif;
+  color:white;
+  }
+  img{
+    width:100%;
+  }
+  #message{
+    color:red;
+  }
+  input{
+    width:100%;
+  }
+.navbar {
+    height: 78px;
+}
+.navbar-default{
+background-image: -webkit-linear-gradient(#fff 0%, rgba(255,255,255,0.9) 100%);
+background-image: -o-linear-gradient(#fff 0%, rgba(255,255,255,0.9) 100%);
+background-image: linear-gradient(#fff 0%, rgba(255,255,255,0.9) 100%);
+} 
+
+.container-fluid{
+  margin-top:10px;
+}
+select,option{
+  color:black;
+}
+.fa-file{
+  color:#3399ff;
+}
+
+h3{
+  font-size:1.16em;
+}
+p{
+  line-height:1.765;
+}
+
+a:hover{
+  text-decoration: none;
+}
+.row1{
+  background-color:#f3f6f9;
+  padding-top:50px;
+  padding-bottom:50px;
+}
+.row{
+  padding-top:50px;
+  padding-bottom:50px;
+}
+.main{
+  margin-top:28px;
+}
+.center{
+  text-align: center;
+}
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus{
+  background-color:#eeeeee;
+  padding:15px;
+}
+.navbar-default .navbar-nav>li>a{
+  background-color:white;
+  padding:15px;
+}
+
+#footer{
+  background-color:#666666;
+  color:white;
+  padding-top:10px;
+  padding-bottom:10px;
+}
+#footer>.center>p{
+  color:white;
+}
+a:hover{
+  text-decoration: none
+}
+
+#main{
+  margin-left:10px;
+  margin-right:10px;
+}
+li{
+    width:300px;
+    line-height: 200%;
+    list-style-type: none;
+    margin:0 auto;
+}
+span{
+  font-size:0.7em;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+  padding:4px;
+}
+.btn{
+  border: 1px solid lightgray;
+  background-color: #fff;
+  display:inline-block;
+  color:#409bec;
+  font-weight:400;
+}
+#titleimage{
+  width:50px;
+  float:left;
+  margin-top:-6px;
+}
+a{
+  color:#222222;
+}
+.fa-thumbs-o-up{
+  color:#1e82ff;
+}
+.fa-thumbs-o-down{
+  color:red;
+}
+.center{
+  margin-top:14%;
+}
+h1{
+  color:white;
+}
+@media (max-width: 600px){
+  .center{
+    margin-top:35%;
+  } 
+}
+
+.fa-comments{
+  font-size:36px;
+  position:fixed;
+  top:6px;
+  left:14px;
+}
+#header{
+  background-color: #409bec;
+  width:100%;
+  height:70px;
+}
+a#login, a#signup{
+  color:white;
+ }
+#login{
+  color:white;
+  position:fixed;
+  right:25px;
+  top:15px;
+}
+#logout{
+  color:white;
+  position:fixed;
+  right:25px;
+  top:15px;
+}
+#signup{
+  color:white;
+  position:fixed;
+  right:75px;
+  top:15px;
+}
+.modal{
+  color:black;
+}
+</style>
+
+{% block head %}
+
+{% endblock %}
+</head>
+
+<body>
+<div id="header">
+  <a style="color:white" href="/langx/"><i class="fa fa-comments"></i></a>
+  {% if request.user.is_authenticated %}
+  <a id="logout" href="/langx/logout/">Logout</a>
+
+  {% else %}
+  <a id="login" href="#" data-toggle="modal" data-target="#myModal">Login</a>
+  <a id="signup" href="#" data-toggle="modal" data-target="#myModal2">Signup</a>
+  {% endif %}
+</div>
+{% block body %}
+
+{% endblock %}
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Login</h4>
+      </div>
+      <div class="modal-body">
+        
+<!--폼그룹-->
+        <form action="/langx/authenticate" method="POST">
+      <div class="form-group">
+        <label for="exampleInputPassword1">ID</label><br>
+        <input type="text" class="form-control" name="username" placeholder="Insert your ID">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">password</label><br>
+        <input type="password" class="form-control" name="password" placeholder="Insert your password">
+      </div>
+      <hr>
+      <input style="width:100%" type="submit" class="btn btn-default" value="Login">
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Signup</h4>
+      </div>
+      <div class="modal-body">
+        
+<!--폼그룹-->
+        <form action="/langx/create" method="POST" id="signform">
+      <div class="form-group">
+        <label for="exampleInputPassword1">ID</label><br>
+        <input type="text" id="user_id" class="form-control" name="username" placeholder="Insert your ID">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">E-mail</label><br>
+        <input type="email" id="user_email" class="form-control" name="email" placeholder="example@gmail.com">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">password</label><br>
+        <input type="password" id="user_pw" class="form-control" name="password" placeholder="Insert your password">
+      </div>
+      <hr>
+      <a id="sign" style="width:100%" class="btn btn-default">Sign up</a>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function(){
+    var submit_signup=function(){
+      if($('#user_id').val()==''){
+        alert('아이디를 입력해주세요');
+      }
+      else if($('#user_email').val()==''){
+        alert('이메일 주소를 입력해주세요');
+      }
+      else if($('#user_pw').val()==''){
+        alert('비밀번호를 입력해주세요');
+      }
+      else{
+        $('#signform').submit();      
+      }
+    }
+    $('#sign').on('click',submit_signup);
+  })
+</script>
+
+</body>
+</html>

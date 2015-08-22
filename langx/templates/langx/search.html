@@ -1,0 +1,73 @@
+{% extends 'langx/search_layout.html' %}
+
+{% block head %}
+<style>
+img{
+	width:40px;
+	height:40px;
+}
+#logo{
+  width:200px;
+  height:auto;
+}
+</style>
+{% endblock %}
+{% block body %}
+
+<div class="center">
+  <img id="logo" src="/static/big__logo.jpg" alt=""><br>
+ 				<img class="english" src="/static/english.jpg" alt="">
+				<img class="french" src="/static/french.jpg" alt="">
+				<img class="german" src="/static/german.jpg" alt="">
+				<img class="spanish" src="/static/spanish.jpg" alt="">
+				<img class="chinese" src="/static/chinese.jpg" alt="">
+				<img class="japanese" src="/static/japanese.jpg" alt="">
+
+
+        <br><br>
+  <li><input class="form-control" placeholder="How may I help you?" 	type="text" style="width:70%; margin:0 auto; display:inline-block;"><a style="margin-bottom:3px;" id="search" class="btn" ><i class="fa fa-hand-o-right"></i></a></li>
+
+  <script>
+ $(document).ready(function(){
+    var this_lang="english";
+    $('img').on('click',function(){
+        $('img').css('opacity','0.5');
+        $(this).css('opacity','1');
+        $('#logo').css('opacity','1');
+        
+        if($(this)[0].className=='english')
+      {
+          $('.form-control')[0].setAttribute('placeholder','How may I help you?')
+          this_lang="english"
+      }
+        else if($(this)[0].className=='french'){
+          $('.form-control')[0].setAttribute('placeholder','je peux vous aider?')
+         this_lang="french"
+        }
+        else if($(this)[0].className=='german'){
+          $('.form-control')[0].setAttribute('placeholder','Wie Kann ich Ihnen helfen?')
+           this_lang="german"
+        }
+        else if($(this)[0].className=='spanish'){
+          $('.form-control')[0].setAttribute('placeholder','¿En qué puedo servirle?')
+         this_lang="spanish"
+        }
+        else if($(this)[0].className=='chinese'){
+          $('.form-control')[0].setAttribute('placeholder','你需要什么帮着?')
+         this_lang="chinese"
+        }
+        else{
+          $('.form-control')[0].setAttribute('placeholder','どうかなさいましたか？')
+         this_lang="japanese"
+        }
+    })
+
+    $('#search').on('click',function(){
+        location.href = '/langx/'+this_lang+'/search/'+$('.form-control').val()
+    })
+
+
+
+  })
+  </script>
+{% endblock %}

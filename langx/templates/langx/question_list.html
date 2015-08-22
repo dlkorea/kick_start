@@ -1,0 +1,347 @@
+<html>
+<head>
+
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+</script>
+<title>Ask</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+ <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title></title>
+<style>
+
+	@import url(http://fonts.googleapis.com/css?family=Titillium+Web);
+body{
+    font-family: 'Titillium Web', sans-serif;
+  }
+  textarea{
+  	border:0px solid lightgray;
+  	border-radius: 5px;
+  	width:100%;
+  }
+  .btn{
+  	border:1px solid lightgray;
+  }
+  .panel-default{
+  	border:0px;
+  	border-bottom:1px solid lightgray;
+  }
+  img{
+  	width:40px;
+  	height:40px;
+  	display:inline-block;
+  	border-radius: 50%;
+  }
+  .row{
+  	padding-top:70px;
+  }
+  .image{
+	margin-top:10px;
+  }
+  #header{
+  	width:100%;
+  	background-color:#409bec;
+  	height:50px;
+  	color:white;
+  	z-index:3;
+  	position:fixed;
+  }
+  #title{
+  	color:white;
+  }
+
+.fa-comments{
+  font-size:36px;
+  position:fixed;
+  top:6px;
+  left:14px;
+}
+  a:hover{
+  	text-decoration: none;
+  }
+  .right{
+  	text-align: right;
+  	position:fixed;
+  	top:5px;
+  	right:250px;
+  }
+ @media(max-width:600px){
+ 	.right{
+ 		right:5px;
+ 	}
+ 	#title{
+ 		left:15px;
+ 	}
+ 	.col-sm-4{
+ 		margin-left:3%;
+ 		margin-right:3%;
+ 	}
+ }
+ h3{
+ 	margin-top:0px;
+ }
+ .question{
+ 	border:1px solid lightgray;
+ }
+  a#login, a#signup, a#logout{
+  color:white;
+ }
+ input.btn{
+  background-color:white;
+ }
+td{
+  height:50px;
+  padding-left:5px;
+}
+.active{
+  opacity:0.5;
+}
+</style>
+  
+</head>
+
+<body>
+	<div id="header">
+		<div class="col-sm-offset-2">
+		  <div class="left">
+		    <a id="title" href="{% url 'langx:index' %}"><i class="fa fa-comments"></i></a>
+			</div>
+			<div class="right">
+      {% for languages in language_list %}
+        
+				<a href="/langx/{{languages.name}}/">{% ifequal languages.name language.name %}<img src="/static/{{ languages.name }}.jpg" alt="">{%else%}<img class="active" src="/static/{{ languages.name }}.jpg" alt="">{% endifequal %}</a>
+
+			{% endfor %}
+        
+        {% if request.user.is_authenticated %}
+        <a class="hidden-xs" id="logout" href="/langx/logout/">Logout</a>
+
+        {% else %}
+        <a class="hidden-xs" id="login" href="#" data-toggle="modal" data-target="#myModal">Login</a>
+        <a class="hidden-xs" id="signup" href="#" data-toggle="modal" data-target="#myModal2">Signup</a>
+        {% endif %}
+
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-2 col-sm-offset-2 hidden-xs">
+      {% if request.user.is_authenticated %}
+			<h3>My Profile</h3>
+			<img src="{% if user.profile.image %}{{ user.profile.image.name }}{%else%}/static/person.jpg{% endif %}" alt="">
+			<li>name: {{ user.username}}</li>
+			<li>exp: {{ user.profile.exp }}</li>
+			<li>Language: {{ user.profile.mother_language.name }}</li>
+			<li>Sub Language: {% for language in user.profile.sub_language.all %}{{ language.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+      {% else %}
+      
+      {% endif %}
+			<br>
+			<h3>Channel</h3>
+		{% for tag in tag_list %}
+      <li>{{ tag.name }}</li>
+    {% empty %}
+      <p>Nothing</p>
+    {% endfor %}
+
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-default question">
+				<div class="panel-body">
+					<td><img src="{% if user.profile.image %}{{ user.profile.image.name }}{%else%}/static/person.jpg{% endif %}" alt="">&nbsp;<strong>{{ user.username }}</strong></td>
+					<form id="write_form" method="POST" action="/langx/{{language.name}}/write/" enctype="multitype/form-data">
+            {% csrf_token %}
+            {{ form }}
+            {% if request.user.is_authenticated %}
+            <a id="submit" class="btn">Ask</a>
+            {% else %}
+            <a class="btn" href="javascript:alert('you should login first ')">Ask</a>
+            {% endif %}
+          </form>
+				</div>
+			</div>
+		{% for question in question_list %}
+			<div class="panel panel-default">
+				<div class="panel-body">
+          <table>
+					<tr>
+            <td><img src="/static/person.jpg" alt=""></td>
+            <td><strong>{{ question.created_by }}</strong><br>{{ question.content }}</td>
+          </tr>
+          </table>
+          <br>
+				{% for answer in question.answer_set.all %}
+          <p><span class="badge">{{answer.created_by}}</span>: {{ answer.content }} &nbsp;<a href="/langx/like/{{answer.id}}/"><i class="fa fa-thumbs-o-up"></i> {{answer.like}}</a></p>
+				{% endfor %}
+          	<img style="float:left;" src="{% if user.profile.image %}{{ user.profile.image.name }}{%else%}/static/person.jpg{% endif %}" alt="">
+            <form method="POST" action="{% url 'langx:write_answer' question.id %}">
+              {% csrf_token %}
+              {{ answer_form }}
+            </form>
+  
+            
+				</div>
+			</div>
+    {% empty %}
+      {% if search_kw %}
+        <p>No Questions containing {{ search_kw }}.</p>
+      {% else %}
+        <p>No Questions Yet.</p>
+      {% endif %}
+    {% endfor %}
+		</div>
+		<div class="col-sm-2 hidden-xs">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h3>TOP 10 responder</h3>
+					<div class="image">
+						<img src="/static/shang.jpg" alt="">&nbsp;&nbsp;kimshangyup
+					</div>
+					<div class="image">
+						<img src="/static/dong.jpg" alt="">&nbsp;&nbsp;kimdongyoung
+					</div>
+					<div class="image">
+						<img src="/static/person.jpg" alt="">&nbsp;&nbsp;jinhyanggi
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+  <script>
+  $(document).ready(function(){
+
+
+
+    $('#submit').on('click',function(){
+      if($('#text').val()){
+        $('#write_form').submit()
+      }
+
+    })
+  	$('.right>img').on('click',function(){
+  			$('.right>img').css('opacity','0.5');
+  			$(this).css('opacity','1');
+  			if($(this)[0].className=='english')
+			{
+  				//$('.form-control')[0].setAttribute('placeholder','How may I help you?')
+			}
+  			else if($(this)[0].className=='french'){
+  				//$('.form-control')[0].setAttribute('placeholder','je peux vous aider?')
+  			}
+   			else if($(this)[0].className=='german'){
+   				//$('.form-control')[0].setAttribute('placeholder','Wie Kann ich Ihnen helfen?')
+
+  			}
+  			else if($(this)[0].className=='spanish'){
+  				//$('.form-control')[0].setAttribute('placeholder','¿En qué puedo servirle?')
+  			}
+  			else if($(this)[0].className=='chinese'){
+  				//$('.form-control')[0].setAttribute('placeholder','你需要什么帮着?')
+  			}
+  			else{
+  				//$('.form-control')[0].setAttribute('placeholder','どうかなさいましたか？')
+  			}
+  	})
+
+  })
+  </script>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Login</h4>
+      </div>
+      <div class="modal-body">
+        
+<!--폼그룹-->
+        <form action="/langx/authenticate/" method="POST">
+      <div class="form-group">
+        <label for="exampleInputPassword1">ID</label><br>
+        <input type="text" class="form-control" name="username" placeholder="Insert your ID">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">password</label><br>
+        <input type="password" class="form-control" name="password" placeholder="Insert your password">
+      </div>
+      <hr>
+      <input style="width:100%" type="submit" class="btn btn-default" value="Login">
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Signup</h4>
+      </div>
+      <div class="modal-body">
+        
+<!--폼그룹-->
+        <form action="/langx/create/" method="POST" id="signform">
+      <div class="form-group">
+        <label for="exampleInputPassword1">ID</label><br>
+        <input type="text" id="user_id" class="form-control" name="username" placeholder="Insert your ID">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">E-mail</label><br>
+        <input type="email" id="user_email" class="form-control" name="email" placeholder="example@gmail.com">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">password</label><br>
+        <input type="password" id="user_pw" class="form-control" name="password" placeholder="Insert your password">
+      </div>
+      <hr>
+      <a id="sign" style="width:100%" class="btn btn-default">Sign up</a>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    var submit_signup=function(){
+      if($('#user_id').val()==''){
+        alert('아이디를 입력해주세요');
+      }
+      else if($('#user_email').val()==''){
+        alert('이메일 주소를 입력해주세요');
+      }
+      else if($('#user_pw').val()==''){
+        alert('비밀번호를 입력해주세요');
+      }
+      else{
+        $('#signform').submit();      
+      }
+    }
+    $('#sign').on('click',submit_signup);
+  })
+</script>
+</body>
+
+</html>

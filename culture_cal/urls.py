@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     # 게시물 목록 보기
     url(r'^$', views.article_list, name="article_list"),
-    url(r'^list_by/(?P<year>\d+)/$',
+
 
     # 게시물 작성, 검색
     url(r'^write/$', views.write_article, name="write_article"),

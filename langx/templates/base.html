@@ -1,0 +1,91 @@
+<html>
+<head>
+
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+</script>
+<title>Ask</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+ <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title></title>
+<style>
+
+   @import url(http://fonts.googleapis.com/css?family=Titillium+Web);
+body{
+    background-color:#e9eaed ;
+    font-family: 'Titillium Web', sans-serif;
+  }
+  textarea{
+     border:0px solid lightgray;
+     border-radius: 5px;
+     width:100%;
+  }
+  .btn{
+     border:1px solid lightgray;
+  }
+  img{
+     width:40px;
+     height:40px;
+     display:inline-block;
+  }
+  .row{
+     padding-top:50px;
+  }
+  .image{
+   margin-top:10px;
+  }
+</style>
+
+</head>
+
+<body>
+   <div class="row">
+      <div class="col-sm-2 col-sm-offset-2">
+        <h3>Language</h3>
+      {% for language in language_list %}
+        <li>{{ language.name|capfirst }}</li>
+      {% endfor %}
+        <br>
+        <h3>Tag</h3>
+      {% for tag in tags %}
+        <li>{{ tag.name }}</li>
+      {% endfor %}
+      </div>
+      <div class="col-sm-4">
+      {% block main %}
+      {% endblock main %}
+      </div>
+      <div class="col-sm-2">
+         <div class="panel panel-default">
+            <div class="panel-body">
+               <h3>TOP 10 responder</h3>
+               <div class="image">
+                  <img src="/static/langx/person.jpg" alt="">&nbsp;&nbsp;kimshangyup
+               </div>
+               <div class="image">
+                  <img src="/static/langx/person.jpg" alt="">&nbsp;&nbsp;kimdongyoung
+               </div>
+               <div class="image">
+                  <img src="/static/langx/person.jpg" alt="">&nbsp;&nbsp;jinhyanggi
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+</body>
+
+</html>

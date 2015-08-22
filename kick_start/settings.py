@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'debug_toolbar',
     'culture_cal',
+    'langx',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,7 +106,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'culture_cal', 'static'),
-    )
+    os.path.join(BASE_DIR, 'langx', 'static'),
+)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
