@@ -1,0 +1,46 @@
+<div class="view_reply" id="view_reply">
+  <div id="view_reply_head">
+    <h3 id="comment_count">Comments '{{ article.count_reply }}'</h3>
+  </div>
+  {% for reply in article.reply_set.all %}
+  <div id="reply-{{ reply.id }}" class="reply">
+    <div class="reply_header">
+      <div class="reply_author_box">
+        <span class="reply_number">{{ reply.pk_related_to_article }}.</span>
+        <span class="reply_author">{{ reply.author }}</span>
+        <!-- 댓글 작성일자 -->
+        <span class="reply_date">
+          {% ifequal reply.created_at|date:"m.d.y" today.created_at|date:"m.d.y" %}
+            {{ reply.created_at|date:'G:i'}}
+          {% else %}
+            {{ reply.created_at|date:'n.d'}}
+          {% endifequal %}
+        </span>
+        <span class="reply_edit_button">
+        {% ifequal reply.author user %}
+          <a href="{% url 'calendar:edit_reply' article.id reply.id %}">수정</a>
+          <a href="{% url 'calendar:delete_reply' article.id reply.id %}" onclick="if(confirm('정말 삭제하시겠습니까?')){deleteReply(this.href)} return false;">삭제</a>
+        {% endifequal %}
+        </span>
+      </div>
+      <!-- 추천, 비추천 버튼 -->
+      <div class="reply_like_buttons" id="{{ reply.id }}" data-url_address="{% url 'calendar:like_reply' article.id reply.id %}">
+        <button class="like" id="reply-like-{{ reply.id }}">추천 {{ reply.count_like }}</button>
+        <button class="dislike" id="reply-dislike-{{ reply.id }}">비추천 {{ reply.count_dislike }}</button>
+      </div>
+    </div>
+    <div class="reply_content">
+      {{ reply.content|linebreaks }}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<!-- 댓글 쓰기 -->
+<div class="write_reply" id="write_reply">
+  <form method="POST" id="write_reply_form" data-url_address="{% url 'calendar:write_reply' article.id %}">
+    {% csrf_token %}
+    <p>댓글 쓰기</p>
+    {{ reply_form }}
+    <input type="submit" id="reply_register_button" value="등록">
+  </form>
+</div>

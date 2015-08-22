@@ -1,0 +1,11 @@
+{% extends 'calendar/base.html' %}
+
+
+{% block body %}
+<div id="write_article">
+  <form method="POST" action="{% url 'calendar:write_article' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+  <input type="submit" id="article_register_button" value="쓰기">
+</form>
+{% endblock body %}

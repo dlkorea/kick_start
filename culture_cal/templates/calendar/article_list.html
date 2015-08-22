@@ -1,0 +1,69 @@
+{% extends 'calendar/base.html' %}
+
+
+{% block home_auth_button %}
+  {% if user.is_authenticated %}
+    <span>{{ user.username }}님</span>
+    <a href="/accounts/logout?next={% url 'calendar:article_list' %}">
+      <button id="logout_button">로그아웃</button>
+    </a>
+  {% else %}
+    <a href="/accounts/login?next={% url 'calendar:article_list' %}">
+      <button id="login_button">로그인</button>
+    </a>
+  {% endif %}
+{% endblock %}
+
+
+{% block body %}
+<div id="article_list">
+  <table class="table table-condensed">
+    <tr class="category">
+      <td class="number"><!--번호--></td>
+      <td class="title">제목</td>
+      <td class="author">글쓴이</td>
+      <td class="created_at">날짜</td>
+      <td class="hits">조회</td>
+      <td class="likes">추천</td>
+    </tr>
+
+  {% if article_list %}
+    <ul class="list_article">
+{% for article in article_list %}
+      <tr class="article_row">
+        <td class="number"><!--{{ article.id }}--></td>
+        <!-- 댓글 있으면 타이틀 옆에 댓글갯수 출력 -->
+        <td class="title">
+          <a href="{% url 'calendar:view_article' article.id %}">
+            {{ article.title }} {% if article.count_reply %}<b>[{{ article.count_reply }}]</b>{% endif %}
+          </a>
+        </td>
+        <td class="author">{{ article.author }}</td>
+        <td class="created_at">
+        {% ifequal article.created_at|date:"y.m.d" today|date:"y.m.d" %}
+          {{ article.created_at|date:"G:i" }}
+        {% else %}
+          {{ article.created_at|date:"y.m.d" }}
+        {% endifequal %}
+        </td>
+        <td class="hits">
+          {{ article.hits }}
+        </td>
+        <td class="likes">
+          {{ article.count_like }}
+        </td>
+      </tr>
+{% endfor %}
+    </ul>
+  {% else %}
+    <p>작성된 게시물이 없습니다.</p>
+  {% endif %}
+  </table>
+
+  <div class="write_button">
+    <button class="btn btn-default btn-sm" id="write_button" OnClick="window.location='{% url 'calendar:write_article' %}'">
+      글쓰기
+    </button>
+  </div>
+</div>
+{% endblock body %}

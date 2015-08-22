@@ -1,0 +1,131 @@
+.view_article {
+    width: 700px;
+    margin: auto;
+}
+.article_header {
+    width: 700px;
+    //border: 1px solid black;
+}
+.first_row {
+    display: block;
+    height: 40px;
+    padding-top: 5px;
+}
+.second_row {
+    display: block;
+    height: 25px;
+}
+.first_row > .article_subject {
+    font-size: 150%;
+    font-weight: bold;
+    width: 300px;
+    padding-left: 10px
+}
+.first_row > .article_date {
+    float: right;
+    padding-top: 10px;
+    width: 155px;
+    text-align: right;
+    padding-right: 10px;
+}
+.second_row > .nickname {
+    width: 300px;
+    float: left;
+    font-size: 100%;
+    font-weight: bold;
+    padding-left: 10px;
+}
+.second_row > .numbers {
+    width: 380px;
+    float: right;
+    text-align: right;
+    padding-right: 10px;
+}
+.numbers > span {
+    padding-left: 20px;
+}
+.content_area {
+    width: 700px;
+    margin: auto;
+    border: 1px solid gray;
+    padding: 20px;
+}
+.content_area > .content_text {
+
+}
+.content_area > .ps_comment {
+    font-size: 85%;
+    color: gray;
+}
+.content_area > .article_like_buttons {
+    padding-top: 30px;
+    text-align: center;
+    margin: auto;
+}
+.content_area > #tag {
+    padding-top: 50px;
+}
+.button_area {
+    padding-top: 10px;
+    overflow: hidden;
+}
+#list_button {
+    float: left;
+}
+#edit_button {
+    float: right;
+}
+#delete_button {
+    float: right;
+}
+.reply_area {
+    width: 700px;
+    margin: auto;
+}
+.reply {
+    margin: auto;
+    border: 1px solid gray;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    display: block;
+}
+.reply_header {
+    height: 30px;
+}
+.reply_author_box {
+    width: 200px;
+    float: left;
+}
+.reply_number {
+    font-weight: bold;
+}
+.reply_author {
+    font-weight: bold;
+    padding-left: 5px;
+}
+.reply_date {
+    padding-left: 10px;
+    font-size: 80%;
+}
+.reply_edit_button {
+    margin-left: 15px;
+    font-size: 80%;
+}
+.reply_like_buttons {
+    width: 130px;
+    float: right;
+}
+.reply_content {
+    width: 640px;
+}
+.write_reply {
+    padding: 20px;
+    padding-top: 10px;
+    border: 1px solid black;
+}
+#reply_register_button {
+    width: 70px;
+    height: 67px;
+    vertical-align: top;
+}

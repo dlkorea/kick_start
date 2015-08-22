@@ -1,0 +1,76 @@
+{% extends 'calendar/base.html' %}
+
+
+
+{% block body %}
+<div class="view_article">
+  <div class="article_header">
+    <!-- 제목, 날짜 -->
+    <div class="first_row">
+      <span class="article_subject">{{ article.title }}</span>
+      <span class="article_date" style="font-size:13px;">{{ article.created_at|date:"Y.m.d H:i" }}</span>
+    </div>
+    <!-- 조회수, 추천, 비추천, 댓글수 -->
+    <div class="second_row">
+      <div class="nickname">
+        <a href="">{{ article.author }}</a>
+      </div>
+      <div class="numbers">
+        <span>조회 수 <b>{{ article.hits }}</b></span>
+        <span id="like_count_in_header">추천 수 <b>{{ article.count_like }}</b></span>
+        <span id="reply_count_in_header">댓글 <b>{{ article.count_reply }}</b></span>
+      </div>
+    </div>
+  </div>
+  <!-- 본문 -->
+  <div class="article_content">
+    <div class="content_area">
+    {% if article.image %}
+      <div class="image_area">
+        <img src="{{ article.image.url }}" style="max-width:650px;"/>
+      </div>
+    {% endif %}
+      <div class="dates">
+        <div class="start_date_time">
+          <h4>시작: {{ article.start_date }} {{ article.start_time }}</h4>
+        </div>
+        <div class="end_date_time">
+          <h4>종료: {{ article.end_date }} {{ article.end_time }}</h4>
+        </div>
+      <div class="content_text" id="document_{{ article.id }}">
+        {{ article.content|linebreaks }}
+      </div>
+      <!-- 태그, 코멘트 -->
+    {% if article.comment %}
+      <div class="ps_comment">
+        P.S. : {{ article.comment }}
+      </div>
+    {% endif %}
+      <!-- 태그 영역 -->
+    {% if article.tags.all %}
+      <div id="tags">
+        Tag: {% for tag in article.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+      </div>
+    {% endif %}
+      <!-- 추천, 비추천 버튼 -->
+      <div class="article_like_buttons" id="{{ article.id }}" data-url_address="{% url 'calendar:like_article' article.id %}">
+        <button class="like" id="article-like-{{ article.id }}">추천 {{ article.count_like }}</button>
+      </div>
+    </div>
+    <!-- 목록, 수정, 삭제 버튼 -->
+    <div class="button_area" id="view_article_footer">
+      <a href="{% url 'calendar:article_list' %}">
+        <button id="list_button">목록</button>
+      </a>
+    {% ifequal article.author user %}
+      <button id="delete_button" onclick="if(confirm('정말 삭제하시겠습니까?')){location.href='{% url 'calendar:delete_article' article.id %}'}">삭제</button>
+      <button id="edit_button" onclick="location.href='{% url 'calendar:edit_article' article.id %}'">수정</button>
+    {% endifequal %}
+    </div>
+    <!-- 댓글 영역 -->
+    <div class="reply_area">
+      {% include 'calendar/view_reply.html' %}
+    </div>
+  </div>
+</div>
+{% endblock %}

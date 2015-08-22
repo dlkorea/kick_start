@@ -1,0 +1,9 @@
+{% extends 'calendar/base.html' %}
+
+{% block body %}
+<form method="POST" action="/accounts/login/">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit">
+</form>
+{% endblock body %}
