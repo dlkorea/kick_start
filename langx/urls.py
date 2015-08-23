@@ -3,9 +3,9 @@ from django.conf.urls import url
 
 urlpatterns = [
 
-    url(r'logout', 'langx.views.logout'),
-    url(r'authenticate', 'langx.views.authenticate'),
-    url(r'create', 'langx.views.create'),
+    url(r'logout', 'langx.views.logout', name='logout'),
+    url(r'authenticate', 'langx.views.authenticate', name='authenticate'),
+    url(r'create', 'langx.views.create', name='create'),
 
     url(r'^$', 'langx.views.index', name='index'),
     url(r'^like/(\d+)/$', 'langx.views.like', name='like'),

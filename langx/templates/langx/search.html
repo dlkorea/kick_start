@@ -10,11 +10,16 @@ img{
   width:200px;
   height:auto;
 }
+#logo{
+  opacity: 1;
+}
+
 </style>
 {% endblock %}
 {% block body %}
 
 <div class="center">
+
   <img id="logo" src="/static/big__logo.jpg" alt=""><br>
  				<img class="english" src="/static/english.jpg" alt="">
 				<img class="french" src="/static/french.jpg" alt="">
@@ -25,16 +30,22 @@ img{
 
 
         <br><br>
-  <li><input class="form-control" placeholder="How may I help you?" 	type="text" style="width:70%; margin:0 auto; display:inline-block;"><a style="margin-bottom:3px;" id="search" class="btn" ><i class="fa fa-hand-o-right"></i></a></li>
+  <li><form method="GET" action="" id="search">
+    <input class="form-control" placeholder="How may I help you?" 	type="text" style="width:70%; margin:0 auto; display:inline-block;"><a style="margin-bottom:3px;" class="btn" id="search_btn"><i class="fa fa-hand-o-right"></i></a>
+    </form>
+  </li>
 
   <script>
  $(document).ready(function(){
+    $('img').css('opacity', '0.5');
+    $('#logo').css('opacity', '1');
+    $('.english').css('opacity', '1');
     var this_lang="english";
     $('img').on('click',function(){
         $('img').css('opacity','0.5');
         $(this).css('opacity','1');
         $('#logo').css('opacity','1');
-        
+
         if($(this)[0].className=='english')
       {
           $('.form-control')[0].setAttribute('placeholder','How may I help you?')
@@ -62,8 +73,12 @@ img{
         }
     })
 
-    $('#search').on('click',function(){
-        location.href = '/langx/'+this_lang+'/search/'+$('.form-control').val()
+    $('#search').on('submit',function(event){
+      event.preventDefault();
+      location.href = '/langx/'+this_lang+'/search/'+$('.form-control').val();
+    })
+    $('#search_btn').on('click', function() {
+      location.href = '/langx/'+this_lang+'/search/'+$('.form-control').val();
     })
 
 

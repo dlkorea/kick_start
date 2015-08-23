@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table>
+    <tr>
+      <td><img src="/static/person.jpg" alt=""></td>
+      <td><strong>{{ question.created_by }}</strong><br>{{ question.content }}</td>
+    </tr>
+    </table>
+    <br>
+    <div id="answer_area_{{ question.pk }}">
+  {% for answer in question.answer_set.all %}
+      {% include 'langx/answer.html' %}
+  {% endfor %}
+    </div>
+    <img style="float:left;" src="{% if user.profile.image %}{{ user.profile.image.name }}{%else%}/static/person.jpg{% endif %}" alt="">
+    <form method="POST" action="{% url 'langx:write_answer' question.id %}" class="write_answer" data-pk="{{ question.pk }}">
+      {% csrf_token %}
+      {{ answer_form }}
+    </form>
+  </div>
+</div>

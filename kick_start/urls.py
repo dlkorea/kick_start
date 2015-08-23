@@ -7,11 +7,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^calendar/', include('culture_cal.urls', namespace='calendar')),
     url(r'^langx/', include('langx.urls', namespace='langx')),
-    url(r'^accounts/', include('allauth.urls')),
-
-
-
-    
+    url(r'^$', 'langx.views.index'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

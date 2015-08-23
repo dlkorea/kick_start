@@ -6,18 +6,33 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
         fields = ('content', )
+        labels = {
+            'content': '',
+        }
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields['content'] = forms.CharField(
-            widget=forms.Textarea(attrs={'cols': 30, 'rows': 2,'placeholder': 'How may I help you?','id':'text'}))
+            widget=forms.Textarea(attrs={
+                'cols': 30,
+                'rows': 2,
+                'placeholder': 'How may I help you?',
+                'id': 'text'
+            })
+        )
+
 
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields = ('content', )
         widgets = {
-            'content': forms.TextInput(attrs={'size': 40, 'class':'form-control','style':'width:80%'})
+            'content': forms.TextInput(attrs={
+                'size': 40,
+                'class': 'form-control',
+                'style': 'width:80%',
+                'placeholder': 'Press enter to submit.',
+            })
         }
         labels = {
             'content': '',
